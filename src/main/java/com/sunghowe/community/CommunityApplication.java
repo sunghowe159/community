@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CommunityApplication {
 
 	public static void main(String[] args) {
+		//测试改动
 		SpringApplication.run(CommunityApplication.class, args);
 	}
 
