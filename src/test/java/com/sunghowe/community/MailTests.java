@@ -34,7 +34,7 @@ public class MailTests {
         context.setVariable("username","sunday");
         String content = templateEngine.process("/mail/demo", context);
         System.out.println(content);
-        mailClient.sendMail("sunghowe@foxmail.com", "TEST HTML", content);
+        mailClient.sendMail("sunghowe@outlook.com", "TEST HTML", content);
 
     }
 }
