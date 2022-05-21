@@ -1,7 +1,6 @@
 package com.sunghowe.community.controller;
 
 import com.google.code.kaptcha.Producer;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.sunghowe.community.entity.User;
 import com.sunghowe.community.service.UserService;
 import com.sunghowe.community.util.CommunityConstant;
@@ -132,7 +131,7 @@ public class LoginController implements CommunityConstant {
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
-    public String logout(@CookieValue("ticket") String ticket){
+    public String logout(@CookieValue("ticket") String ticket) {
         userService.logout(ticket);
         return "redirect:/login";
     }
