@@ -65,7 +65,7 @@ public class UserController {
             return "/site/setting";
         }
         //生成随机文件名
-        fileName = CommunityUtil.generateUUID() + suffix;
+        fileName = CommunityUtil.generateUUID() + "." + suffix;
         //确定文件存放的路径
         File dest = new File(uploadPath + "/" + fileName);
         try {
@@ -78,7 +78,7 @@ public class UserController {
         //更新当前用户的头像的路径(web访问路径)
         //http://localhost:8088/community/user/header/XXX.png
         User user = hostHolder.getUser();
-        String headerUrl = domain + contextPath + "/user/header" + fileName;
+        String headerUrl = domain + contextPath + "/user/header/" + fileName;
         userService.updateHeader(user.getId(), headerUrl);
 
         return "redirect:/index";
