@@ -4,7 +4,9 @@ import com.sunghowe.community.entity.DiscussPost;
 import com.sunghowe.community.entity.Page;
 import com.sunghowe.community.entity.User;
 import com.sunghowe.community.service.DiscussPostService;
+import com.sunghowe.community.service.LikeService;
 import com.sunghowe.community.service.UserService;
+import com.sunghowe.community.util.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +25,13 @@ import java.util.Map;
  * @create 2022-05-17 19:53
  */
 @Controller
-public class HomeController {
+public class HomeController implements CommunityConstant {
     @Autowired
     private DiscussPostService discussPostService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private LikeService likeService;
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page){
@@ -45,6 +49,9 @@ public class HomeController {
                 map.put("post", post); // 将帖子放入map
                 User user = userService.findUserById(post.getUserId());
                 map.put("user", user); // 将发帖的用户放入同一个map
+
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount",likeCount);
                 discussPosts.add(map); // map作为元素存入ArrayList
             }
         }
