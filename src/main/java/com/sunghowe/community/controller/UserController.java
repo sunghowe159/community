@@ -2,6 +2,7 @@ package com.sunghowe.community.controller;
 
 import com.sunghowe.community.annotation.LoginRequired;
 import com.sunghowe.community.entity.User;
+import com.sunghowe.community.service.LikeService;
 import com.sunghowe.community.service.UserService;
 import com.sunghowe.community.util.CommunityUtil;
 import com.sunghowe.community.util.HostHolder;
@@ -47,6 +48,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private HostHolder hostHolder;
+    @Autowired
+    private LikeService likeService;
 
     @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
@@ -120,5 +123,20 @@ public class UserController {
             model.addAttribute("newPasswordMsg", map.get("newPasswordMsg"));
             return "/site/setting";
         }
+    }
+
+    //个人主页
+    @RequestMapping(path = "/profile/{userId}", method = RequestMethod.GET)
+    public String getProfilePage(@PathVariable("userId") int userId, Model model) {
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在！");
+        }
+        //用户
+        model.addAttribute("user", user);
+        // 点赞数量
+        int likeCount = likeService.findUserLikeCount(userId);
+        model.addAttribute("likeCount", likeCount);
+        return "/site/profile";
     }
 }
