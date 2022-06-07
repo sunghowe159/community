@@ -7,7 +7,6 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.stereotype.Service;
-import sun.plugin2.gluegen.runtime.CPU;
 
 /**
  * @author SungHowe
