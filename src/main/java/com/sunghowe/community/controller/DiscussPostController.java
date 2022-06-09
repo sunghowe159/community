@@ -1,9 +1,7 @@
 package com.sunghowe.community.controller;
 
-import com.sunghowe.community.entity.Comment;
-import com.sunghowe.community.entity.DiscussPost;
-import com.sunghowe.community.entity.Page;
-import com.sunghowe.community.entity.User;
+import com.sunghowe.community.entity.*;
+import com.sunghowe.community.event.EventProducer;
 import com.sunghowe.community.service.CommentService;
 import com.sunghowe.community.service.DiscussPostService;
 import com.sunghowe.community.service.LikeService;
@@ -41,6 +39,8 @@ public class DiscussPostController implements CommunityConstant {
     private CommentService commentService;
     @Autowired
     private LikeService likeService;
+    @Autowired
+    private EventProducer eventProducer;
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -56,7 +56,16 @@ public class DiscussPostController implements CommunityConstant {
         post.setContent(content);
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
-        //  报错之后统一处理
+
+        // 触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
+
+        // 报错之后统一处理
         return CommunityUtil.getJSONString(0,"发布成功!");
     }
 
