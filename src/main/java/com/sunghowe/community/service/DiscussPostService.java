@@ -40,7 +40,6 @@ public class DiscussPostService {
         //过滤敏感词
         post.setTitle(sensitiveFilter.filter(post.getTitle()));
         post.setContent(sensitiveFilter.filter(post.getContent()));
-
         return discussPostMapper.insertDiscussPost(post);
     }
 
