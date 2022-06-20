@@ -1,6 +1,8 @@
 package com.sunghowe.community.config;
 
 import com.sunghowe.community.quartz.AlphaJob;
+//import com.sunghowe.community.quartz.PostScoreRefreshJob;
+//import com.sunghowe.community.quartz.PostScoreReFreshJob;
 import com.sunghowe.community.quartz.PostScoreRefreshJob;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -43,7 +45,7 @@ public class QuartzConfig {
         factoryBean.setJobDetail(alphaJobDetail);
         factoryBean.setName("alphaTrigger");
         factoryBean.setGroup("alphaTriggerGroup");
-        factoryBean.setRepeatCount(3000);
+        factoryBean.setRepeatInterval(1000 * 6 * 5);
         factoryBean.setJobDataMap(new JobDataMap());
         return factoryBean;
     }
@@ -66,7 +68,7 @@ public class QuartzConfig {
         factoryBean.setJobDetail(postScoreRefreshJobDetail);
         factoryBean.setName("postScoreRefreshTrigger");
         factoryBean.setGroup("communityTriggerGroup");
-        factoryBean.setRepeatCount(1000 * 60 * 5);
+        factoryBean.setRepeatInterval(5 * 60 * 1000);
         factoryBean.setJobDataMap(new JobDataMap());
         return factoryBean;
     }

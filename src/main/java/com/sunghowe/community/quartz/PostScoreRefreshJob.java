@@ -21,7 +21,7 @@ import java.util.Date;
 
 /**
  * @author SungHowe
- * @title PostScoreREfreshJob
+ * @title PostScoreRefreshJob
  * @description
  * @create 2022-06-19 15:35
  */
@@ -53,20 +53,20 @@ public class PostScoreRefreshJob implements Job, CommunityConstant {
     }
 
     @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    public void execute(JobExecutionContext context) throws JobExecutionException {
         String redisKey = RedisKeyUtil.getPostScoreKey();
         BoundSetOperations operations = redisTemplate.boundSetOps(redisKey);
 
         if (operations.size() == 0) {
-            logger.info("[任务取消] 没有需要刷新的帖子！");
+            logger.info("[任务取消] 没有需要刷新的帖子!");
             return;
         }
 
-        logger.info("[任务开始] 正在刷新帖子分数：" + operations.size());
+        logger.info("[任务开始] 正在刷新帖子分数: " + operations.size());
         while (operations.size() > 0) {
             this.refresh((Integer) operations.pop());
         }
-        logger.info("[任务结束] 帖子分数刷新完毕！");
+        logger.info("[任务结束] 帖子分数刷新完毕!");
     }
 
     private void refresh(int postId) {
